@@ -8,16 +8,16 @@ It can be found in Heroku at: https://user-registry-jaimego.herokuapp.com/
 
 ## Login
 
-![](login)
+![](login.png)
 
 ## Register
 
-![](register)
+![](register.png)
 
 ## Flash message (success)
 
-![](flash_success)
+![](flash_success.png)
 
 ## Flash message (fail)
 
-![](flash_fail)
+![](flash_fail.png)
