@@ -18,6 +18,7 @@
     "http-errors": "~1.6.2",
     "mongodb": "*",
     "mongoose": "*",
+    "connect-mongo": "*",
     "morgan": "~1.9.0",
     "multer": "*",
     "passport": "*",

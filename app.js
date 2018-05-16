@@ -12,6 +12,9 @@ const db=mongoose.connection;
 const messages=require('express-messages');
 const expressValidator=require('express-validator');
 const bodyParser=require('body-parser')
+const MongoStore = require('connect-mongo')(session);
+
+mongoose.connect(process.env.MONGODB_URI);
 
 
 
@@ -43,7 +46,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
 	secret:'secret',
 	saveUninitialized:true,
-	resave:true
+	resave:true,
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 
