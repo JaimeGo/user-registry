@@ -5,25 +5,25 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session=require('express-session');
 const passport=require('passport');
-const LocalStrategy=require('passport-local').Strategy;
 const flash=require('connect-flash');
 const mongo=require('mongodb');
 const mongoose=require('mongoose');
 const db=mongoose.connection;
 const messages=require('express-messages');
 const expressValidator=require('express-validator');
-const multer=require('multer');
-const upload = multer({ dest: './uploads' });
+const bodyParser=require('body-parser')
 
-
-
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users')(upload);
 
 
 
 const app = express();
+
+
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+
+
 
 app.use(expressValidator());
 
@@ -32,8 +32,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -44,8 +45,11 @@ app.use(session({
 	saveUninitialized:true,
 	resave:true
 }));
+
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(flash());
 app.use(function (req, res, next) {
 	res.locals.messages = messages(req, res);
