@@ -6,26 +6,26 @@ const logger = require('morgan');
 const session=require('express-session');
 const passport=require('passport');
 const LocalStrategy=require('passport-local').Strategy;
-const multer=require('multer');
 const flash=require('connect-flash');
 const mongo=require('mongodb');
 const mongoose=require('mongoose');
 const db=mongoose.connection;
 const messages=require('express-messages');
 const expressValidator=require('express-validator');
-
-
+const multer=require('multer');
+const upload = multer({ dest: './uploads' });
 
 
 
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users')(upload);
 
 
 
 const app = express();
 
+app.use(expressValidator());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,10 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-var upload = multer({ dest: 'uploads/' })
 
 app.use(session({
 	secret:'secret',
@@ -49,8 +46,14 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use(function (req, res, next) {
+	res.locals.messages = messages(req, res);
+	next();
+});
 
-
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 app.use(expressValidator({
 	errorFormatter: function (param,msg,value) {
@@ -73,12 +76,7 @@ app.use(expressValidator({
 }));
 
 
-app.use(flash());
-app.use(function (req,res,next) {
 
-	res.locals.messages=messages(req,res);
-	next();
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -95,6 +93,9 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
+
+
+
 
 app.listen(process.env.PORT || 3000);
 
