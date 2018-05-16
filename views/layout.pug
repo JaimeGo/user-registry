@@ -18,12 +18,14 @@ html
             a.nav-link(href='/')
               | Members
               span.sr-only (current)
-          li(class=(title=='Register'?'active':'')).nav-item
-            a.nav-link(href='/users/register') Register
-          li(class=(title=='Login'?'active':'')).nav-item
-            a.nav-link(href='/users/login') Login
-          li(class=(title=='Logout'?'active':'')).nav-item
-            a.nav-link(href='/users/logout') Logout
+          if !user
+            li(class=(title=='Register'?'active':'')).nav-item
+              a.nav-link(href='/users/register') Register
+            li(class=(title=='Login'?'active':'')).nav-item
+              a.nav-link(href='/users/login') Login
+          if user
+            li(class=(title=='Logout'?'active':'')).nav-item
+              a.nav-link(href='/users/logout') Logout
 
 
     br

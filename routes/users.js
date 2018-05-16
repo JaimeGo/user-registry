@@ -119,7 +119,11 @@ passport.use(new LocalStrategy(function(username,password,done){
 
 
 
-
+router.get('/logout', function(req, res){
+    req.logout();
+    req.flash('success', 'You are logged out');
+    res.redirect('/users/login');
+});
 
 
 
