@@ -1,6 +1,6 @@
 var mongoose=require('mongoose');
 
-mongoose.connect('mongodb://localhost/nodeauth');
+mongoose.connect(process.env.MONGODB_URI);
 
 const db=mongoose.connection;
 
