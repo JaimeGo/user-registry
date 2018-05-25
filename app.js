@@ -14,7 +14,7 @@ const flash=require('connect-flash');
 var bcrypt = require('bcryptjs');
 const mongo=require('mongodb');
 const mongoose=require('mongoose');
-const db=mongoose.connection;
+
 
 
 
@@ -25,7 +25,7 @@ const MongoStore = require('connect-mongo')(session);
 mongoose.connect(process.env.MONGODB_URI);
 
 
-
+const db=mongoose.connection;
 
 
 
@@ -52,7 +52,7 @@ app.use(session({
 	secret:'secret',
 	saveUninitialized:true,
 	resave:true,
-	store: new MongoStore({ mongooseConnection: mongoose.connection })
+	store: new MongoStore({ mongooseConnection: db })
 }));
 
 
