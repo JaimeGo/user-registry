@@ -61,22 +61,14 @@ router.post('/register', upload.single('profileimage'), function (req, res, next
         });
 
         User.createUser(newUser, function (err, user) {
-            if (err) {
-                throw err;
-            }
+            if (err) throw err;
+            console.log(user);
 
-            passport.authenticate("local")(req,res,function(){
-                console.log(user);
-                req.flash('success', 'You are now registered');
-                res.location('/');
-                res.redirect('/');
-
-            });
-            
-            
         });
 
-        
+        req.flash('success', 'You are now registered');
+        res.location('/');
+        res.redirect('/');
     }
 
 });
