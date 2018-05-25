@@ -1,4 +1,5 @@
 var express = require('express');
+var router = express.Router();
 const passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy
 const multer=require('multer');
@@ -6,7 +7,7 @@ var upload=multer({dest:'./uploads'})
 
 var User = require('../models/user');
 
-var router = express.Router();
+
 
 
 
@@ -23,7 +24,7 @@ router.get('/login', function (req, res, next) {
 router.post('/register', upload.single('profileimage'), function (req, res, next) {
     var name = req.body.name;
     var email = req.body.email;
-    var username = req.body.email;
+    var username = req.body.username;
     var password = req.body.password;
     var confirm_password = req.body.confirm_password;
 
@@ -40,6 +41,7 @@ router.post('/register', upload.single('profileimage'), function (req, res, next
     req.checkBody('name', 'Name field is required').notEmpty();
     req.checkBody('email', 'Email field is required').notEmpty();
     req.checkBody('email', 'Email is valid').isEmail();
+    req.checkBody('username','Username field is required').notEmpty();
     req.checkBody('password', 'Passwordfield is required').notEmpty();
     req.checkBody('confirm_password', 'Passwords do not match').equals(req.body.password);
 
