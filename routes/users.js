@@ -86,18 +86,18 @@ router.post('/login',
 
 passport.serializeUser(function(user, done) {
     console.log("serialize")
-    return done(null, user.id);
+    done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
     console.log("deserialize")
-    return User.getUserById(id, function(err, user) {
-        return done(err, user);
+    User.getUserById(id, function(err, user) {
+        done(err, user);
     });
 });
 passport.use(new LocalStrategy(function(username,password,done){
     console.log("localstrategy")
-    return User.getUserByUsername(username,function(err,user){
+    User.getUserByUsername(username,function(err,user){
         if(err) throw err
         if(!user){
             console.log("No user")
