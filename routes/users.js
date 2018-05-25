@@ -92,7 +92,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     console.log("deserialize")
     return User.getUserById(id, function(err, user) {
-        done(err, user);
+        return done(err, user);
     });
 });
 passport.use(new LocalStrategy(function(username,password,done){
