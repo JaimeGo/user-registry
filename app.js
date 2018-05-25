@@ -52,7 +52,7 @@ app.use(session({
 	secret:'secret',
 	saveUninitialized:true,
 	resave:true,
-	store: new MongoStore({ mongooseConnection: db.db })
+	store: new MongoStore({ mongooseConnection: db })
 }));
 
 
