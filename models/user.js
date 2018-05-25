@@ -32,13 +32,13 @@ var User=module.exports=mongoose.model('User',UserSchema);
 
 module.exports.getUserById=function (id, callback) {
     console.log("getUserById")
-    User.findById(id,callback)
+    return User.findById(id,callback)
 }
 
 module.exports.getUserByUsername = function(username, callback){
     console.log("getUserByUsername")
     var query = {username: username};
-    User.findOne(query, callback);
+    return User.findOne(query, callback);
 }
 
 module.exports.createUser=function (newUser,callback) {
